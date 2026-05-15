@@ -1,0 +1,26 @@
+# 빌드 산출물
+build/
+*.dmg
+
+# 자동 생성되는 아이콘 리소스 (소스는 IconGenerator.swift 에 있음)
+AppIcon.iconset/
+AppIcon.icns
+
+# macOS / 에디터 메타파일
+.DS_Store
+*.swp
+.vscode/
+.idea/
+
+# Xcode (사용 시)
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+DerivedData/
+
+# Swift Package Manager
+.build/
+.swiftpm/
+Package.resolved
+
+# 개인 / 환경 의존 파일 — 사용자 머신에만 필요
+SPM_PL87W_Manual_Web_260317.pdf
