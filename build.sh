@@ -43,4 +43,11 @@ if [ -f "$MANUAL" ]; then
   cp "$MANUAL" "$RESOURCES/$(basename "$MANUAL")"
 fi
 
+# ad-hoc 코드 서명 — Apple Developer ID 가 없어도 "손상됨" 메시지를 완화해 준다.
+# 모든 리소스 (binary, plist, icon, resources) 가 번들에 들어간 후 마지막에 서명.
+# notarization 은 못 받지만 적어도 서명된 번들로 만들어 quarantine 시 차단 강도를 낮춤.
+# 다운로드 후 quarantine 이 붙은 상태라면 사용자가 `xattr -dr com.apple.quarantine`
+# 명령으로 한 번 우회해 줘야 한다 (README 안내).
+codesign --force --deep --sign - "$APP" 2>&1 || echo "codesign 실패 — Gatekeeper 우회 안내가 더 필요할 수 있음"
+
 echo "$APP"
