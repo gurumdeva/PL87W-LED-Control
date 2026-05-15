@@ -16,10 +16,11 @@ final class DisconnectedView: NSStackView {
     required init?(coder: NSCoder) { fatalError() }
 
     private func setupLayout() {
+        // AppDelegate 가 backgroundView 의 정중앙에 absolute 배치하므로 자체 top
+        // 패딩은 0. 자식들은 centerX 로 정렬해 가운데에 모은다.
         orientation = .vertical
         alignment = .centerX
         spacing = 10
-        edgeInsets = NSEdgeInsets(top: 36, left: 0, bottom: 0, right: 0)
 
         let iconView = NSImageView()
         iconView.image = NSImage(systemSymbolName: "cable.connector.slash", accessibilityDescription: nil)?

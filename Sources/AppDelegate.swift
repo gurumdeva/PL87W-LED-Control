@@ -116,12 +116,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             ])
         }
 
+        // 디스커넥트 안내는 rootStack 의 흐름 안에 두면 contentArea 가 차지하는 공간
+        // 아래에 깔려서 하단으로 밀린다. 대신 backgroundView 의 정중앙에 absolute
+        // 배치해 빈 상태에 어울리는 중앙 정렬을 보장한다.
         disconnectedView = DisconnectedView()
         disconnectedView.onRetry = { [weak self] in
             Task { [weak self] in await self?.viewModel.refresh() }
         }
         disconnectedView.isHidden = true
-        rootStack.addArrangedSubview(disconnectedView)
+        disconnectedView.translatesAutoresizingMaskIntoConstraints = false
+        backgroundView.addSubview(disconnectedView)
+        NSLayoutConstraint.activate([
+            disconnectedView.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
+            disconnectedView.centerYAnchor.constraint(equalTo: backgroundView.centerYAnchor)
+        ])
 
         toastView = ToastView(viewModel: viewModel)
         rootStack.addArrangedSubview(toastView)
