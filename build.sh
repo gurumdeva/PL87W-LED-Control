@@ -43,4 +43,10 @@ if [ -f "$MANUAL" ]; then
   cp "$MANUAL" "$RESOURCES/$(basename "$MANUAL")"
 fi
 
+# ad-hoc 코드 서명 — 번들 무결성을 보장하고 Gatekeeper 의 일부 검증을 통과시킨다.
+# 모든 리소스 (binary, plist, icon, resources) 가 번들에 들어간 후 마지막에 서명.
+# 다운로드 시 부착되는 quarantine 속성은 install.sh / dmg 의 Install.command /
+# Homebrew cask 의 postflight 에서 자동 제거한다.
+codesign --force --deep --sign - "$APP" 2>&1 || echo "codesign 실패"
+
 echo "$APP"
