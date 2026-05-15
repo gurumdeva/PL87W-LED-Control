@@ -176,7 +176,7 @@ final class ChannelPanel: NSView {
         effectPopup.action = #selector(effectChanged(_:))
         effectPopup.setContentHuggingPriority(.defaultLow, for: .horizontal)
         for preset in viewModel.section.presets {
-            effectPopup.addItem(withTitle: preset.name)
+            effectPopup.addItem(withTitle: preset.displayName)
             effectPopup.lastItem?.representedObject = Int(preset.value)
         }
     }

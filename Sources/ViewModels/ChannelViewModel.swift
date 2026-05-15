@@ -67,11 +67,11 @@ final class ChannelViewModel {
     // MARK: - Intents (모두 async — caller 가 Task 로 호출)
 
     func selectEffect(_ value: UInt8) async {
-        let name = section.presets.first { $0.value == value }?.name ?? "스타일"
+        let label = section.presets.first { $0.value == value }?.displayName ?? "스타일"
         await perform(
             { await self.device.write(channel: self.channel, value: .effect, bytes: [value]) },
             onSuccess: { self.effect.value = value },
-            successText: "\(name) 적용",
+            successText: "\(label) 적용",
             failureText: "전송 실패: USB 유선 연결을 확인하세요"
         )
     }

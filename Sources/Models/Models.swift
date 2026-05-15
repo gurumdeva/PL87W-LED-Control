@@ -40,9 +40,24 @@ struct ViaLightingState {
 // MARK: - UI 카탈로그
 
 /// 효과 프리셋 한 개. UI 의 popup 항목과 HID payload 가 1:1 매핑된다.
+///
+/// `name` 은 펌웨어 식별자 (snake_case, VIA JSON 정의 그대로) — 디버깅/로그용.
+/// 화면 표시는 `displayName` 을 통해 사람이 읽기 좋은 "Title Case" 로 자동 변환된다.
 struct EffectPreset {
     let name: String
     let value: UInt8
+
+    /// `solid_color` → `Solid Color`, `fixed wave` → `Fixed Wave` 처럼 변환.
+    /// 단어 구분자(`_`, 공백)를 공백으로 통일하고 각 단어 첫 글자만 대문자로.
+    var displayName: String {
+        name
+            .split(whereSeparator: { $0 == "_" || $0 == " " })
+            .map { word -> String in
+                guard let first = word.first else { return "" }
+                return first.uppercased() + word.dropFirst()
+            }
+            .joined(separator: " ")
+    }
 }
 
 /// 화면 한 개(= 한 채널)를 그리는 데 필요한 모든 정보.
